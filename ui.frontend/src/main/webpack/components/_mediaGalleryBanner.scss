@@ -1,0 +1,284 @@
+/* Media Gallery Banner Styles */
+.media-gallery-banner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid #d8d8d8;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, 0.1);
+}
+
+/* Hero Carousel */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    outline: none;
+}
+
+.hero-slides-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    background: #f2f2f2;
+    overflow: hidden;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease-in-out;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+}
+
+.hero-media {
+    position: relative;
+    width: 100%;
+    line-height: 0; // collapse whitespace below inline images
+}
+
+.hero-media img,
+.hero-media .video-poster {
+    width: 100%;
+    height: clamp(360px, 48vw, 600px);
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+}
+
+/* Play button overlay for videos */
+.play-video-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(76, 18, 88, 0.88);
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 50%;
+    width: 78px;
+    height: 78px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.play-video-btn:hover {
+    background: rgba(95, 27, 110, 0.96);
+    transform: translate(-50%, -50%) scale(1.04);
+}
+
+.play-icon {
+    color: white;
+    font-size: 34px;
+    margin-left: 4px;
+}
+
+/* Overlay Labels (Badges) */
+.overlay-labels {
+    position: absolute;
+    top: 28px;
+    left: 24px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    z-index: 5;
+}
+
+.badge {
+    background: #6b1f73;
+    color: white;
+    padding: 7px 13px;
+    font-weight: 700;
+    border-radius: 2px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation Arrows */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(107, 31, 115, 0.94);
+    color: white;
+    border: none;
+    font-size: 34px;
+    font-weight: 400;
+    cursor: pointer;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s;
+    user-select: none;
+
+    &:focus-visible {
+        outline: 3px solid #fff;
+        outline-offset: -3px;
+    }
+}
+
+.carousel-arrow:hover {
+    background: #7c2787;
+}
+
+.prev {
+    left: 16px;
+}
+
+.next {
+    right: 16px;
+}
+
+/* Thumbnail Strip */
+.thumbnail-strip {
+    margin-top: 12px;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    background: #fff;
+    padding: 0;
+}
+
+.thumbnails-scroll {
+    display: flex;
+    gap: 10px;
+    padding: 0;
+}
+
+.thumbnail {
+    position: relative;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: border-color 0.2s, opacity 0.2s;
+    width: 96px;
+    height: 62px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #eaeaea;
+    opacity: 0.88;
+
+    &:focus-visible {
+        outline: 3px solid #d10000;
+        outline-offset: 2px;
+    }
+}
+
+.thumbnail.active {
+    border-color: #d1d1d1;
+    opacity: 1;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumb-play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 20px;
+    background: rgba(76, 18, 88, 0.82);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Video Lightbox */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.lightbox-content video {
+    width: 100%;
+    height: auto;
+    max-height: 90vh;
+}
+
+.close-lightbox {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Placeholder when no slides */
+.media-gallery-banner-placeholder {
+    background: #f5f5f5;
+    padding: 50px;
+    text-align: center;
+    color: #666;
+    border: 1px dashed #ccc;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-slides-wrapper {
+        min-height: 300px;
+    }
+
+    .hero-media img,
+    .hero-media .video-poster {
+        height: clamp(240px, 56vw, 420px);
+    }
+
+    .carousel-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 26px;
+    }
+
+    .thumbnail {
+        width: 78px;
+        height: 52px;
+    }
+
+    .badge {
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+}
