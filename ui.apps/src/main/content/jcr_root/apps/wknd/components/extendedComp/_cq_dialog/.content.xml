@@ -5,32 +5,12 @@
           xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
           jcr:primaryType="nt:unstructured"
           jcr:title="Extended Comp"
-          extraClientlibs="[wknd.extendedcomp.author]"
+          extraClientlibs="[wknd.components.extendedComp.editor]"
           sling:resourceType="cq/gui/components/authoring/dialog">
     <content
         jcr:primaryType="nt:unstructured"
         sling:resourceType="granite/ui/components/coral/foundation/container">
         <items jcr:primaryType="nt:unstructured">
-            <tabs
-                jcr:primaryType="nt:unstructured"
-                sling:resourceType="granite/ui/components/coral/foundation/tabs"
-                maximized="{Boolean}true">
-                <items jcr:primaryType="nt:unstructured">
-                    <items
-                        jcr:primaryType="nt:unstructured"
-                        sling:hideResource="{Boolean}true"/>
-                    <properties
-                        jcr:primaryType="nt:unstructured"
-                        sling:hideResource="{Boolean}true"/>
-                    <accessibility
-                        jcr:primaryType="nt:unstructured"
-                        sling:hideResource="{Boolean}true"/>
-                    <slidesTab
-                        jcr:primaryType="nt:unstructured"
-                        jcr:title="Slides"
-                        sling:resourceType="granite/ui/components/coral/foundation/container"
-                        margin="{Boolean}true">
-                        <items jcr:primaryType="nt:unstructured">
                             <slides
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
@@ -44,12 +24,9 @@
                                         <slideType
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                            granite:class="extendedcomp-dialog__slide-type cq-dialog-dropdown-showhide"
+                                            granite:class="cq-dialog-dropdown-mediatype"
                                             fieldLabel="Media Type"
                                             name="./slideType">
-                                            <granite:data
-                                                jcr:primaryType="nt:unstructured"
-                                                cq-dialog-dropdown-showhide-target=".extendedcomp-dialog__thumbnail-path"/>
                                             <items jcr:primaryType="nt:unstructured">
                                                 <image
                                                     jcr:primaryType="nt:unstructured"
@@ -62,41 +39,49 @@
                                                     value="video"/>
                                             </items>
                                         </slideType>
-                                        <assetPath
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                            fieldLabel="Asset Path (Image or Video in DAM)"
-                                            name="./assetPath"
-                                            rootPath="/content/dam"
-                                            required="{Boolean}true"/>
-                                        <thumbnailPathContainer
+                                        <imageContainer
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container"
-                                            granite:class="hide extendedcomp-dialog__thumbnail-path">
-                                            <granite:data
-                                                jcr:primaryType="nt:unstructured"
-                                                showhidetargetvalue="video"/>
+                                            granite:class="image-container media-toggle-target">
                                             <items jcr:primaryType="nt:unstructured">
+                                                <imagePath
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                    fieldLabel="Select Image"
+                                                    name="./assetPath"
+                                                    rootPath="/content/dam"
+                                                    required="{Boolean}true"/>
+                                            </items>
+                                        </imageContainer>
+                                        <videoContainer
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/container"
+                                            granite:class="video-container media-toggle-target"
+                                            style="display:none">
+
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <videoPath
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                                    fieldLabel="Select Video"
+                                                    name="./assetPath"
+                                                    rootPath="/content/dam"
+                                                    />
                                                 <thumbnailPath
                                                     jcr:primaryType="nt:unstructured"
                                                     sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                                    fieldLabel="Video Thumbnail Image (DAM) – required for video type"
-                                                    emptyText="Select a thumbnail image from DAM"
+                                                    fieldLabel="Video Thumbnail"
                                                     name="./thumbnailPath"
-                                                    rootPath="/content/dam"/>
+                                                    rootPath="/content/dam"
+                                                    />
                                             </items>
-                                        </thumbnailPathContainer>
-                                        <!-- <altText
-                                            jcr:primaryType="nt:unstructured"
-                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                            fieldLabel="Alt Text"
-                                            emptyText="Describe the image for accessibility"
-                                            name="./altText"/> -->
+                                        </videoContainer>
                                         <overlayLabels
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                             fieldLabel="Overlay Labels (e.g. Flash Sale)"
-                                            name="./overlayLabels">
+                                            name="./overlayLabels"
+                                            composite="{Boolean}false">
                                             <field
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
@@ -107,9 +92,5 @@
                                 </field>
                             </slides>
                         </items>
-                    </slidesTab>
-                </items>
-            </tabs>
-        </items>
     </content>
 </jcr:root>

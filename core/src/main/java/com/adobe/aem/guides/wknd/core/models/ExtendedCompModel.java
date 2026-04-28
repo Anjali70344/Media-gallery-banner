@@ -1,26 +1,26 @@
 package com.adobe.aem.guides.wknd.core.models;
 
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-@Model(adaptables = Resource.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
+@Model(adaptables = {Resource.class, SlingHttpServletRequest.class}, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class ExtendedCompModel {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExtendedCompModel.class);
 
-    @Self
+    @SlingObject
     private Resource currentResource;
 
     private List<SlideItem> slides;
@@ -28,9 +28,15 @@ public class ExtendedCompModel {
 
     @PostConstruct
     protected void init() {
+        slides = new ArrayList<>();
+        if (currentResource == null) {
+            LOG.error("Unable to initialize ExtendedCompModel because currentResource is null");
+            galleryId = "media-gallery-unknown";
+            return;
+        }
+
         LOG.debug("Initializing ExtendedCompModel for resource: {}", currentResource.getPath());
 
-        slides = new ArrayList<>();
         galleryId = "media-gallery-" + UUID.nameUUIDFromBytes(currentResource.getPath().getBytes()).toString();
         Resource slidesContainer = currentResource.getChild("slides");
 
@@ -80,16 +86,7 @@ public class ExtendedCompModel {
         }
 
         LOG.info("Total slides loaded: {}", slides.size());
-    for (int i = 0; i < slides.size(); i++) {
-        SlideItem item = slides.get(i);
-        LOG.info("Slide {} -> assetPath: {}, slideType: {}, altText: {}, overlayLabels: {}",
-            i + 1,
-            item.getAssetPath(),
-            item.getSlideType(),
-            item.getAltText(),
-            item.getOverlayLabels() != null ? Arrays.toString(item.getOverlayLabels()) : "[]");
-    }
-    LOG.info("Total slides: {}", slides);
+        LOG.info("Total slides: {}", slides);
     }
 
     public List<SlideItem> getSlides() {
@@ -156,19 +153,6 @@ public class ExtendedCompModel {
 
         public boolean isImage() {
             return !isVideo();
-        }
-
-        @Override
-        public String toString() {
-            return "SlideItem{" +
-                    "assetPath='" + assetPath + '\'' +
-                    ", slideType='" + slideType + '\'' +
-                    ", altText='" + getAltText() + '\'' +
-                    ", overlayLabels=" + Arrays.toString(overlayLabels) +
-                    ", thumbnailUrl='" + thumbnailUrl + '\'' +
-                    ", posterUrl='" + posterUrl + '\'' +
-                    ", videoPosterAlt='" + videoPosterAlt + '\'' +
-                    '}';
         }
     }
 }
