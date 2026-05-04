@@ -1,0 +1,43 @@
+<sly data-sly-use.model="com.adobe.aem.guides.wknd.core.models.CustomTeaser"></sly>
+
+<div class="cmp-teaser 
+    cmp-teaser--${model.theme} 
+    ${model.overlayEnabled ? 'cmp-teaser--overlay-enabled' : ''} 
+    ${cqStyleClasses}">
+
+    <div
+        data-sly-test="${model.backgroundImage}"
+        class="cmp-teaser__background"
+        style="background-image: url('${model.backgroundImage @ context='uri'}');">
+    </div>
+
+    <div class="cmp-teaser__content">
+
+        <span class="cmp-teaser__badge" data-sly-test="${model.badge}">
+            ${model.badge}
+        </span>
+
+        <h2 class="cmp-teaser__title">${model.title}</h2>
+
+        <!--/* <p class="cmp-teaser__description">
+            ${model.description}
+        </p> */-->
+        <div class="cmp-teaser__description">
+              ${model.description @ context='html'}
+        </div>
+
+        <a
+            data-sly-test="${model.linkURL}"
+            href="${model.linkURL}"
+            class="cmp-teaser__action cmp-teaser__action--${model.ctaStyle}">
+            Learn More
+        </a>
+
+        <span
+            data-sly-test="${!model.linkURL}"
+            class="cmp-teaser__action cmp-teaser__action--${model.ctaStyle}">
+            Learn More
+        </span>
+
+    </div>
+</div>
